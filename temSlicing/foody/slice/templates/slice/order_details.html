@@ -1,0 +1,98 @@
+{% extends 'slice/layout.html' %}
+
+{% block body %}
+<!-- Page Header Start -->
+    <div class="container-fluid page-header wow fadeIn" data-wow-delay="0.1s">
+        <div class="container">
+            <h1 class="display-3 mb-3 animated slideInDown">ORDER DETAILS</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a class="text-body" href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-body" href="#">Pages</a></li>
+                    <li class="breadcrumb-item text-dark active" aria-current="page">Contact Us</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Contact Start -->
+<h1 style="color:green; text-align:center;">ORDERS:</h1>
+<form  style="background-color:black;" class="row g-3 needs-validation" action="" method="post" enctype="multipart/form-data" novalidate>
+  {% csrf_token %}
+    <div class="col-md-4">
+        <div><label for="validationCustom01" class="form-label">USER ID</label>
+
+    <input type="number" class="form-control" id="validationCustom01" placeholder="user id" name="user_id" required></div>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div><label for="validationCustom02" class="form-label">FOOD ID</label>
+    <input type="number" class="form-control" id="validationCustom02" placeholder="food id"  name="food_id" required></div>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+ <div class="col-md-4">
+    <div><label for="validationCustom02" class="form-label">QUANTITY</label>
+    <input type="number" class="form-control"  placeholder="quantity"  name="quantity" required></div>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+    <div class="col-md-4">
+    <div><label for="validationCustom02" class="form-label">TOTAL AMOUNT</label>
+    <input type="number" class="form-control"  placeholder="total amount"  name="amount" required></div>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+    <div class="col-md-4">
+    <div><label for="validationCustom02" class="form-label">STATUS</label>
+    <input type="text" class="form-control"  placeholder="status"  name="status" required></div>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </div>
+</form>
+
+
+ <div class="container-xxl py-6" style="background-color:pink; width:100%;">
+        <div class="container">
+            <h1 style="color:red;">ORDER DETAILS</h1>
+            <table border="3" style="width:100%;">
+                <tr>
+                    <th>ID</th>
+                    <th>user_id</th>
+                    <th>food_id</th>
+                    <th>quantity</th>
+                    <th>total amount</th>
+                    <th>status</th>
+                </tr>
+                {% for i in data %}
+                <tr>
+                    <td>{{i.id}}</td>
+                    <td>{{i.user_id}}</td>
+                    <td> {{i.food_id}} </td>
+                    <td>{{i.quantity}}</td>
+                    <td>{{i.total_amount}}</td>
+                    <td>{{i.status}}</td>
+
+                    <td>
+                     <a href="{% url 'orders_edit' i.id %}"><button>edit</button></a>
+                     <a href="{% url 'order_delete' i.id %}"><button>delete</button></a>
+         </td>
+                </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

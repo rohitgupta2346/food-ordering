@@ -1,0 +1,85 @@
+{% extends 'slice/layout.html' %}
+
+{% block body %}
+<!-- Page Header Start -->
+    <div class="container-fluid page-header wow fadeIn" data-wow-delay="0.1s">
+        <div class="container">
+            <h1 class="display-3 mb-3 animated slideInDown">RESTOURANT MENU</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a class="text-body" href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-body" href="#">Pages</a></li>
+                    <li class="breadcrumb-item text-dark active" aria-current="page">Contact Us</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Contact Start -->
+<h1 style="color:green; text-align:center;">RESTOURANT MENU:</h1>
+<form  style="background-color:black;" class="row g-3 needs-validation" action="{% url 'restourant_menu'  %}" method="post" enctype="multipart/form-data" novalidate>
+  {% csrf_token %}
+    {{id}}
+    <div class="col-md-4">
+        <div><label for="validationCustom01" class="form-label">FOOD name</label>
+
+    <input type="text" class="form-control" id="validationCustom01" placeholder="enter food name" name="food_name" required></div>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div><label for="validationCustom02" class="form-label">is_veg</label>
+    <input type="text" class="form-control" id="validationCustom02" placeholder="is veg????"  name="is_veg" required></div>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+    <div class="col-md-4">
+    <div><label for="validationCustom02" class="form-label">food price</label>
+    <input type="number" class="form-control"  placeholder="food price"  name="food_price" required></div>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+ <div><label>restourant lists:</label><select name = "res" id="sel">
+   {% for i in food_data %}
+    <option value="{{i.id}}">{{i.name}}</option>
+   {% endfor %}
+ </select>
+ </div>
+
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Submit now</button>
+  </div>
+</form>
+<div class="container-xxl py-6" style="background-color:pink; width:100%;">
+        <div class="container">
+            <h1 style="color:red;">RESTAURANTS DATA</h1>
+            <table border="3" width="100%">
+                <tr>
+                    <th>ID</th>
+                    <th>FOOD Name</th>
+                    <th>IS VEG????</th>
+                    <th> FOOD PRICE</th>
+                    <th>Actions</th>
+                </tr>
+                {% for i in food_data %}
+                <tr>
+                    <td>{{i.id}}</td>
+                    <td>{{i.food_name}}</td>
+                    <td> {{i.is_veg}} </td>
+                    <td>{{i.price}}</td>
+                    <id>{{i.restourant_id}}</id>
+<!--                    <td><img src="" alt="error loading image" height="100px" width="100px"></td>-->
+                    <td>
+                     <a href="{% url 'menu_edit' i.id %}"><button>edit</button></a>
+                     <a href="{% url 'menu_delete' i.id %}"><button>delete</button></a>
+         </td>
+                </tr>
+                 {% endfor %}
+            </table>
+        </div>
+</div>
+{% endblock %}

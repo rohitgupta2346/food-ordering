@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>food name:</label><input type="text" name="fname" value="{{data.food_name}}">
+     <label>is_veg:</label><input type="text" name="isveg" value="{{data.is_veg}}">
+     <label>price:</label><input type="number" name="price" value="{{data.price}}">
+  <label>restourant id:</label><input type="number" name="rid" value="{{data.restourant_id}">
+
+    <input type="submit" value="edit save">
+</form>
+</body>
+</html>
