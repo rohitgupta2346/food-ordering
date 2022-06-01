@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 
+
 class User(AbstractUser):
     pass
 class restourant(models.Model):
@@ -27,6 +28,10 @@ class order_details(models.Model):
     status=models.CharField(max_length=40, default='order')
 
 
+class profile(models.Model):
+    user_profile = models.OneToOneField(User,on_delete=models.CASCADE)
+    email = models.EmailField(max_length=50)
+    usernamep = models.CharField(max_length=20)
 
 
 

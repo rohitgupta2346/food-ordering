@@ -17,30 +17,64 @@
     <!-- Page Header End -->
 
     <!-- Contact Start -->
-<h1 style="color:green; text-align:center;">add restaurants:</h1>
-<form  style="background-color:black;" class="row g-3 needs-validation" action="{% url 'addrestaurants' %}" method="post" enctype="multipart/form-data" novalidate>
-  {% csrf_token %}
-    <div class="col-md-4">
-        <div><label for="validationCustom01" class="form-label">Restourant name</label>
+<section class="sign-in" style="margin-top:70px;">
+  <div class="container">
+      <div class="signin-content">
+          <div class="signin-image">
+              <figure><img src="static/img/pizza-g04d2cb425_1920.jpg" alt="sing up image"></figure>
+              <a href="{% url 'restourant_menu' %}" class="signup-image-link">ADD RESTOURANT MENU</a>
+          </div>
 
-    <input type="text" class="form-control" id="validationCustom01" value="restourant name" name="restourant_name" required></div>
-    <div class="valid-feedback">
-      Looks good!
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div><label for="validationCustom02" class="form-label">Restourant location</label>
-    <input type="text" class="form-control" id="validationCustom02" value="enter restourant location"  name="restourant_location" required></div>
-    <div class="valid-feedback">
-      Looks good!
-    </div>
-  </div>
- <div><label>enter restourant logo:</label><input type="file" name="restourant_logo"></div>
+          <div class="signin-form">
+              <h2 class="form-title">Add Restourant</h2>
+              <form action="{% url 'addrestaurants' %}" method="POST" class="register-form" id="login-form"  enctype="multipart/form-data">
+                  {% csrf_token %}
 
-  <div class="col-12">
-    <button class="btn btn-primary" type="submit">Submit form</button>
+                  <div class="form-group">
+                      <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                      <input type="text" name="restourant_name" id="your_name" placeholder="Name" required minlength="5"/>
+                  </div>
+                  <div class="form-group">
+                      <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                      <input type="text" name="restourant_location" id="your_pass" placeholder="location" minlength="5" required/>
+                  </div>
+                  <div class="form-group">
+                      <label for="your_logo"><i class="zmdi zmdi-lock"></i></label>
+                      <input type="file" name="restourant_logo" id="your_logo" placeholder="logo" required/>
+                  </div>
+
+                  <div class="form-group form-button">
+                      <input type="submit" name="signin" id="signin" class="form-submit" value="ADD"/>
+                  </div>
+              </form>
   </div>
-</form>
+      </div>
+  </div>
+</section>
+
+<!--<form  style="background-color:black;" class="row g-3 needs-validation" action="" method="post" enctype="multipart/form-data" novalidate>-->
+<!--  {% csrf_token %}-->
+<!--    <div class="col-md-4">-->
+<!--        <div><label for="validationCustom01" class="form-label">Restourant name</label>-->
+
+<!--    <input type="text" class="form-control" id="validationCustom01" value="restourant name" name="restourant_name" required></div>-->
+<!--    <div class="valid-feedback">-->
+<!--      Looks good!-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="col-md-4">-->
+<!--    <div><label for="validationCustom02" class="form-label">Restourant location</label>-->
+<!--    <input type="text" class="form-control" id="validationCustom02" value="enter restourant location"  name="restourant_location" required></div>-->
+<!--    <div class="valid-feedback">-->
+<!--      Looks good!-->
+<!--    </div>-->
+<!--  </div>-->
+<!-- <div><label>enter restourant logo:</label><input type="file" name="restourant_logo"></div>-->
+
+<!--  <div class="col-12">-->
+<!--    <button class="btn btn-primary" type="submit">Submit form</button>-->
+<!--  </div>-->
+<!--</form>-->
 <!--<form action="{% url 'addrestaurants' %}" method="post" enctype="multipart/form-data">-->
 <!--    {% csrf_token %}-->
 <!--    <div> <label>enter restourant name:</label><input type="text" name="restourant_name" ></div>-->
@@ -68,7 +102,6 @@
                     <td><img src="{{i.image.url}}" alt="error loading image" height="100px" width="100px"></td>
                     <td>
                      <a href="{% url 'edit' i.id %}"><button>edit</button></a>
-                        <a href="{% url 'restourant_menu' i.id %}"><button>addmenu</button></a>
                      <a href="{% url 'delete' i.id %}"><button>delete</button></a>
          </td>
                 </tr>
