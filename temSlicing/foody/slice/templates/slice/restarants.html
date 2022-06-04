@@ -1,20 +1,6 @@
 {% extends 'slice/layout.html' %}
 
 {% block body %}
-<!-- Page Header Start -->
-    <div class="container-fluid page-header wow fadeIn" data-wow-delay="0.1s">
-        <div class="container">
-            <h1 class="display-3 mb-3 animated slideInDown">ADD RESTAURANTS</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a class="text-body" href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a class="text-body" href="#">Pages</a></li>
-                    <li class="breadcrumb-item text-dark active" aria-current="page">Contact Us</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-    <!-- Page Header End -->
 
     <!-- Contact Start -->
 <section class="sign-in" style="margin-top:70px;">
@@ -22,12 +8,12 @@
       <div class="signin-content">
           <div class="signin-image">
               <figure><img src="static/img/pizza-g04d2cb425_1920.jpg" alt="sing up image"></figure>
-              <a href="{% url 'restourant_menu' %}" class="signup-image-link">ADD RESTOURANT MENU</a>
+              <a href="{% url 'restourant_menu' %}" class="signup-image-link">ADD RESTAURANT MENU</a>
           </div>
 
           <div class="signin-form">
-              <h2 class="form-title">Add Restourant</h2>
-              <form action="{% url 'addrestaurants' %}" method="POST" class="register-form" id="login-form"  enctype="multipart/form-data">
+              <h2 class="form-title">Add Restaurant</h2>
+              <form action="" method="POST" class="register-form" id="login-form"  enctype="multipart/form-data">
                   {% csrf_token %}
 
                   <div class="form-group">
@@ -36,7 +22,7 @@
                   </div>
                   <div class="form-group">
                       <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                      <input type="text" name="restourant_location" id="your_pass" placeholder="location" minlength="5" required/>
+                      <input type="text" name="restourantlocation" id="your_pass" placeholder="location" minlength="5" required/>
                   </div>
                   <div class="form-group">
                       <label for="your_logo"><i class="zmdi zmdi-lock"></i></label>
@@ -52,38 +38,7 @@
   </div>
 </section>
 
-<!--<form  style="background-color:black;" class="row g-3 needs-validation" action="" method="post" enctype="multipart/form-data" novalidate>-->
-<!--  {% csrf_token %}-->
-<!--    <div class="col-md-4">-->
-<!--        <div><label for="validationCustom01" class="form-label">Restourant name</label>-->
-
-<!--    <input type="text" class="form-control" id="validationCustom01" value="restourant name" name="restourant_name" required></div>-->
-<!--    <div class="valid-feedback">-->
-<!--      Looks good!-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <div class="col-md-4">-->
-<!--    <div><label for="validationCustom02" class="form-label">Restourant location</label>-->
-<!--    <input type="text" class="form-control" id="validationCustom02" value="enter restourant location"  name="restourant_location" required></div>-->
-<!--    <div class="valid-feedback">-->
-<!--      Looks good!-->
-<!--    </div>-->
-<!--  </div>-->
-<!-- <div><label>enter restourant logo:</label><input type="file" name="restourant_logo"></div>-->
-
-<!--  <div class="col-12">-->
-<!--    <button class="btn btn-primary" type="submit">Submit form</button>-->
-<!--  </div>-->
-<!--</form>-->
-<!--<form action="{% url 'addrestaurants' %}" method="post" enctype="multipart/form-data">-->
-<!--    {% csrf_token %}-->
-<!--    <div> <label>enter restourant name:</label><input type="text" name="restourant_name" ></div>-->
-<!--     <div><label>enter restourant location:</label><input type="text" name="restourant_location" ></div>-->
-<!--     <div><label>enter restourant logo:</label><input type="file" name="restourant_logo"></div>-->
-<!--    <input type="submit" value="submit details">-->
-<!--</form>-->
-
- <div class="container-xxl py-6" style="background-color:pink; width:100%;">
+ <div class="container-xxl py-6" style="width:100%;">
         <div class="container">
             <h1 style="color:red;">RESTAURANTS DATA</h1>
             <table border="3" width="100%">
@@ -101,7 +56,7 @@
                     <td> {{i.location}} </td>
                     <td><img src="{{i.image.url}}" alt="error loading image" height="100px" width="100px"></td>
                     <td>
-                     <a href="{% url 'edit' i.id %}"><button>edit</button></a>
+                     <a href="{% url 'editing' i.id %}"><button>edit</button></a>
                      <a href="{% url 'delete' i.id %}"><button>delete</button></a>
          </td>
                 </tr>
