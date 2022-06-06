@@ -1,0 +1,62 @@
+{% extends 'slice/home.html' %}
+
+{% block body %}
+<!-- Contact Start -->
+<div class="container-xxl py-6">
+    <div class="container">
+        <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s"
+             style="max-width: 500px; visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+            <h1 class="display-5 mb-3">Menu Details</h1>
+        </div>
+        <div class="row g-5 justify-content-center">
+            <div class="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.5s"
+                 style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+                <form action="{% url 'addMenu' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="dishName" placeholder="Dish Name"
+                                       name="dishName">
+                                <label for="dishName">Dish Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="dishPrice" placeholder="Dish Price"
+                                       name="dishPrice">
+                                <label for="dishPrice">Dish Price</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <label>Select Restaurant</label>
+                                <br>
+                                <br>
+                                <select name="restaurantId" id="cars" style="width: 100%; font-size: 1rem; font-weight: 400;
+                                        line-height: 1.5; color: #555; background-color: #fff; background-clip: padding-box; border: 1px solid #ced4da;
+                                        appearance: none; border-radius: 0; transition: border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;">
+                                    {% for i in rt %}
+                                    <option value="{{i.id}}">{{i.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input type="file" class="form-control" id="image" placeholder="Dish Image"
+                                       name="dishImage">
+                                <label for="image">Dish Image</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

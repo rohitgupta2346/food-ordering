@@ -21,7 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('adminn/',include('adminn.urls')),
-    path('',include('slice.urls')),
+    path('AdminSide/',include('slice.urls')),
+    path('UserSide/',include('UserSide.urls')),
 ]
 
 if settings.DEBUG:

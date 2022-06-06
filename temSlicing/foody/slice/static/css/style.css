@@ -25,7 +25,7 @@
 }
 
 .bg-icon {
-    background: url(../img/snake-g9254f255b_1920.jpg) center center repeat;
+    background: url(../img/bg-icon.png) center center repeat;
     background-size: contain;
 }
 
@@ -94,7 +94,7 @@
     border-bottom: 1px solid rgba(0, 0, 0, .07);
 }
 
-.navbar .down-toggle::after {
+.navbar .dropdown-toggle::after {
     border: none;
     content: "\f107";
     font-family: "Font Awesome 5 Free";
@@ -136,7 +136,6 @@
         transform-origin: 0% 0%;
         transition: .5s;
         opacity: 0;
-        
     }
 
     .navbar .nav-item:hover .dropdown-menu {
@@ -144,7 +143,6 @@
         visibility: visible;
         transition: .5s;
         opacity: 1;
-        
     }
 }
 
@@ -193,7 +191,7 @@
 .page-header {
     padding-top: 12rem;
     padding-bottom: 6rem;
-    background: url(../img/pizza-g04d2cb425_1920.jpg) top right no-repeat;
+    background: url(../img/carousel-1.jpg) top right no-repeat;
     background-size: cover;
 }
 
@@ -342,8 +340,7 @@
 
 /*** Footer ***/
 .footer {
-    color: #99999;
-
+    color: #999999;
 }
 
 .footer .btn.btn-link {
@@ -385,4 +382,3 @@
 .footer .copyright a:hover {
     color: var(--primary);
 }
-

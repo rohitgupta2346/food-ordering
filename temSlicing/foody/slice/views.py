@@ -1,185 +1,153 @@
-from django.shortcuts import render
-from . models import *
-from django.http import HttpResponse,HttpResponseRedirect
+from django.shortcuts import render, redirect
+from .models import *
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from . models import User
-def one(request):
-    return render(request,'slice/index.html')
-def products(request):
-    return  render(request,'slice/product.html')
+from .models import User
+import os
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
-def contactt(request):
-    return render(request,'contact.html')
 
-def aboutus(request):
-    return render(request,'slice/about.html')
 # Create your views here.
+@login_required(login_url='adminLogin')
+def home(request):
+    return render(request, 'slice/productItems.html')
 
-def all_restourants(request):
-   res =  restourant.objects.all()
-   return render(request,'slice/restarants.html',{'res':res})
 
-def restourants_menu(request):
-   res_menu =  restourant_menu.objects.all()
-   return render(request,'slice/restourant_menu.html',{'res_menu':res_menu})
+@login_required(login_url='adminLogin')
+def items(request):
+    r = Restaurant.objects.all().count()
+    rm = RestaurantMenu.objects.all().count()
+    return render(request, 'slice/productItems.html', {"r": r, "rm": rm, "pageTitle": "Home"})
 
-def order_detail(request):
-   ord_details =  order_details.objects.all()
-   return render(request,'slice/order_details.html',{'ord_details':ord_details})
 
-def addrestaurants(request):
-    data = restourant.objects.all()
+@login_required(login_url='adminLogin')
+def addRestaurants(request):
     if request.method == 'POST':
-        name = request.POST['restourant_name']
-        location = request.POST['restourant_location']
-        res_image = request.FILES['restourant_logo']
-        a = restourant(
-            name = name,
-            location = location,
-            image = res_image
+        name = request.POST['restaurantName']
+        location = request.POST['restaurantLocation']
+        phone_number = request.POST['restaurantNumber']
+        email = request.POST['restaurantEmail']
+        res_image = request.FILES['restaurantLogo']
+        a = Restaurant(
+            name=name,
+            location=location,
+            phoneNumber=phone_number,
+            email=email,
+            image=res_image
         )
         a.save()
-        return render(request,'slice/restarants.html',{'data':data})
+        res = Restaurant.objects.all()
+        return render(request, 'slice/viewRestaurants.html',
+                      {'message': "Restaurant added successfully", "res": res, "pageTitle": "Restaurants List"})
     else:
-        return  render(request,'slice/restarants.html',{'data':data})
+        return render(request, 'slice/addRestaurants.html', {"pageTitle": "Add Restaurant"})
 
-def data_edit(request,id):
-    y=restourant.objects.get(id=id)
+
+@login_required(login_url='adminLogin')
+def viewRestaurants(request):
+    res = Restaurant.objects.all()
+    return render(request, 'slice/viewRestaurants.html', {'res': res, "pageTitle": "Restaurants List"})
+
+
+@login_required(login_url='adminLogin')
+def editRestaurants(request, id):
+    y = Restaurant.objects.get(id=id)
     if request.method == 'POST':
+        if len(request.FILES) != 0:
+            if len(y.image) > 0:
+                os.remove(y.image.path)
+            y.image = request.FILES['res_image']
         res_name = request.POST['res_name']
         res_location = request.POST['res_location']
-        res_image = request.FILES['res_image']
-        y.name=res_name
-        y.location=res_location
-        y.image=res_image
+        res_number = request.POST['restaurantNumber']
+        res_email = request.POST['restaurantEmail']
+        y.name = res_name
+        y.location = res_location
+        y.phoneNumber = res_number
+        y.email = res_email
         y.save()
-        return HttpResponseRedirect(reverse('addrestaurants'))
-
+        res = Restaurant.objects.all()
+        return render(request, 'slice/viewRestaurants.html',
+                      {'message': "Restaurant update successfully", "res": res, "pageTitle": "Restaurants List"})
     else:
-        return render(request,"slice/data_edit.html",{"data":y})
+        return render(request, "slice/editRestaurants.html", {"data": y, "pageTitle": "Update Restaurant"})
 
-def data_delete(request,id):
-    z=restourant.objects.get(id=id)
+
+@login_required(login_url='adminLogin')
+def deleteRestaurants(request, id):
+    z = Restaurant.objects.get(id=id)
     z.delete()
-    return HttpResponseRedirect(reverse('addrestaurants'))
+    res = Restaurant.objects.all()
+    return render(request, 'slice/viewRestaurants.html',
+                  {'message': "Restaurant delete successfully", "res": res, "pageTitle": "Restaurants List"})
 
-def addrestaurant_menu(request):
-    # id=id
-    data = restourant.objects.all()
-    tdata=restourant_menu.objects.all()
-    if request.method=='POST':
-        food_name=request.POST['food_name']
-        isveg=request.POST['is_veg']
-        food_price=request.POST['food_price']
-        id=request.POST['res']
-        rest_id=restourant.objects.get(id=id)
-        menu_data=restourant_menu(
-            food_name=food_name,
-            is_veg=isveg,
-            price=food_price,
-            restourant_id=rest_id,
 
+@login_required(login_url='adminLogin')
+def addMenu(request):
+    if request.method == 'POST':
+        name = request.POST['dishName']
+        dish_price = request.POST['dishPrice']
+        res_id = request.POST['restaurantId']
+        res_image = request.FILES['dishImage']
+        a = RestaurantMenu(
+            food_name=name,
+            price=dish_price,
+            menuImage=res_image,
+            restaurantId=Restaurant.objects.get(id=res_id),
         )
-        menu_data.save()
-        print(tdata)
-        return render(request,'slice/restourant_menu.html',{'food_data':tdata,'data' : data})
+        a.save()
+        res = RestaurantMenu.objects.all()
+        return render(request, 'slice/viewMenu.html',
+                      {'message': "Restaurant Menu added successfully", "res": res, "pageTitle": "Menus List"})
     else:
-        return render(request,'slice/restourant_menu.html',{'food_data':tdata,'data' : data})
-    # if request.method == 'POST':
-    #     print('hello')
-    #     food_name = request.POST['food_name']
-    #     # isveg = request.POST['is_veg']
-    #     food_price=request.POST['food_price']
-    #     id = request.POST['res']
-    #     rest_id=restourant.objects.get(id=id)
-    #     print(food_name, food_price, rest_id)
-    #     menu_data = restourant_menu(
-    #         food_name = food_name,
-    #          # is_veg= isveg,
-    #         price =food_price,
-    #         restourant_id=rest_id,
-    #
-    #     )
-    #     menu_data.save()
-    #     return render(request,'slice/restourant_menu.html',{'food_data':data})
-    # else:
-    #     return render(request,'slice/restourant_menu.html',{'food_data':data})
-def menu_edit(request,id):
-    mdata = restourant.objects.all()
-    p=restourant_menu.objects.get(id=id)
+        rt = Restaurant.objects.all()
+        return render(request, 'slice/addMenu.html', {"rt": rt, "pageTitle": "Add Menu"})
+
+
+@login_required(login_url='adminLogin')
+def viewMenus(request):
+    tdata = RestaurantMenu.objects.all()
+    return render(request, 'slice/viewMenu.html', {'data': tdata, "pageTitle": "Menus List"})
+
+
+@login_required(login_url='adminLogin')
+def editMenu(request, id):
+    a = RestaurantMenu.objects.get(id=id)
     if request.method == 'POST':
-        fdname = request.POST['fdname']
-        isveg = request.POST['isveg']
-        price = request.POST['price']
-
-        id = request.POST['res']
-        rid = restourant.objects.get(id=id)
-        p.food_name=fdname
-        p.is_veg=isveg
-        p.price=price
-        p.restourant_id=rid
-        p.save()
-        return HttpResponseRedirect(reverse('restourant_menu'))
-
+        if len(request.FILES) != 0:
+            if len(a.menuImage) > 0:
+                os.remove(a.menuImage.path)
+            a.res_image = request.FILES['dishImage']
+        print("Restaurant Id - ", request.POST['restaurantId'])
+        dPrice = int(request.POST['dishPrice'])
+        print("Price - ", dPrice, "Type - ", type(dPrice))
+        name = request.POST['dishName']
+        a.food_name = name,
+        a.price = dPrice,
+        a.restaurantId_id = Restaurant.objects.get(id=request.POST['restaurantId']),
+        a.save()
+        res = RestaurantMenu.objects.all()
+        return render(request, 'slice/viewMenu.html',
+                      {'message': "Restaurant Menu updated successfully", "res": res, "pageTitle": "Menus List"})
     else:
-        return render(request,"slice/menu_edit.html",{"data":p,'mdata':mdata})
+        rt = Restaurant.objects.all()
+        return render(request, 'slice/editMenu.html', {"a": a, "rt": rt, "pageTitle": "Update Menu"})
 
 
-def menu_delete(request,id):
-    z=restourant_menu.objects.get(id=id)
+@login_required(login_url='adminLogin')
+def deleteMenu(request, id):
+    z = RestaurantMenu.objects.get(id=id)
     z.delete()
-    return HttpResponseRedirect(reverse('restourant_menu'))
+    res = RestaurantMenu.objects.all()
+    return render(request, 'slice/viewMenu.html',
+                  {'message': "Restaurant Menu deleted successfully", "res": res, "pageTitle": "Menus List"})
 
-
-def order_edit(request,id):
-    y=order_details.objects.get(id=id)
-    if request.method == 'POST':
-        user_id = request.POST['u_id']
-        food_id= request.POST['f_id']
-        quantity= request.POST['quan']
-        total_amount=request.POST['amnt']
-        status=request.POST['ststs']
-        y.user_id=user_id
-        y.food_id=food_id
-        y.quantity=quantity
-        y.total_amount=total_amount
-        y.status=status
-        y.save()
-        return HttpResponseRedirect(reverse('orders'))
-
-    else:
-        return render(request,"slice/order_edit.html",{"order_data":y})
-
-def order_delete(request,id):
-    z=order_details.objects.get(id=id)
-    z.delete()
-    return HttpResponseRedirect(reverse('orders'))
-
-
-
-def orders(request):
-    data = order_details.objects.all()
-    if request.method == 'POST':
-        user_id = request.POST['user_id']
-        food_id= request.POST['food_id']
-        quantity=request.POST['quantity']
-        price=request.POST['amount']
-        status=request.POST['status']
-        order = order_details(
-            user_id = user_id,
-            food_id= food_id,
-            quantity =quantity,
-            total_amount=price,
-            status=status
-
-        )
-        order.save()
-        return render(request,'slice/order_details.html',{'order_detail':data})
-
-    else:
-        return render(request,'slice/order_details.html',{'order_detail':data})
 
 def register(request):
     if request.method == "POST":
@@ -206,70 +174,47 @@ def register(request):
     else:
         return render(request, "slice/register.html")
 
-def login_view(request):
+
+def adminLogin(request):
     if request.method == "POST":
         # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username,
-        password=password)
+                            password=password)
         # Check if authentication successful
         if user is not None:
-            login(request, user)
-            return HttpResponseRedirect(reverse("home"))
+            if user.is_superuser:
+                login(request, user)
+                return redirect(items)
+            else:
+                return render(request, "slice/adminLogin.html", {
+                    "message": "Invalid username and/or password."
+                })
         else:
-            return render(request, "slice/loginindex.html", {
-            "message": "Invalid username and/or password."
-        })
+            return render(request, "slice/adminLogin.html", {
+                "message": "Invalid username and/or password."
+            })
     else:
-        return render(request, "slice/loginindex.html")
+        return render(request, "slice/adminLogin.html")
 
-def logout_view(request):
+
+@login_required(login_url='adminLogin')
+def adminLogout(request):
     logout(request)
-    return render(request,'slice/index.html')
+    return redirect(adminLogin)
 
 
-from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
-from django.shortcuts import render, redirect
-
-def change_password(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)  # Important!
-            messages.success(request, 'Your password was successfully updated!')
-            return redirect('change_password')
-        else:
-            messages.error(request, 'Please correct the error below.')
-    else:
-        form = PasswordChangeForm(request.user)
-    return render(request, 'slice/changp.html', {
-        'form': form
-    })
-
-def profiles(request):
-    uid = User.id
-
-    pdata=profile.objects.all()
-    print(uid)
-    if request.method == 'POST':
-        emaill= request.POST['emaill']
-        ji= request.POST['ji']
-        p_data = profile(
-            user_profile = User.email,
-            email=emaill,
-            usernamep=ji,
-        )
-        p_data.save()
-        return render(request, 'slice/profile.html', {'p_data': pdata})
-    else:
-        return render(request, 'slice/profile.html')
+@login_required(login_url='adminLogin')
+def orders(request):
+    ord_details = OrderDetails.objects.all()
+    return render(request, 'slice/order_details.html', {'ord_details': ord_details, "pageTitle": "Orders List"})
 
 
-
-
-
-
+@login_required(login_url='adminLogin')
+def changestatus(request):
+    b = OrderDetails.objects.get(id=request.GET['id'])
+    b.status = request.GET['status']
+    b.save()
+    ord_details = OrderDetails.objects.all()
+    return render(request, 'slice/order_details.html', {'ord_details': ord_details, "pageTitle": "Orders List"})

@@ -1,0 +1,72 @@
+{% extends 'slice/home.html' %}
+
+{% block body %}
+<!-- Contact Start -->
+<div class="container-xxl py-6">
+        <div class="container">
+            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px; visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+                <h1 class="display-5 mb-3">Update Restaurant</h1>
+                </div>
+            <div class="row g-5 justify-content-center">
+                <div class="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+                    <form action="{% url 'editRestaurants' data.id %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="name" placeholder="Restaurant Name" name="res_name" value="{{data.name}}">
+                                    <label for="name">Restaurant Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control" id="email" placeholder="Restaurant Email" name="restaurantEmail" value="{{data.email}}">
+                                    <label for="email">Restaurant Email</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="subject" placeholder="Restaurant Phone Number" name="restaurantNumber" value="{{data.phoneNumber}}">
+                                    <label for="subject">Restaurant Phone Number</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="location" placeholder="Restaurant Phone Number" name="res_location" value="{{data.location}}">
+                                    <label for="location">Restaurant Location</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                            <p>Current Image</p>
+                            <img src="{{data.image.url}}" width="100px" height="100px">
+                                </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="file" class="form-control" id="image" placeholder="Restaurant Image" name="res_image">
+                                    <label for="image">Pick New Image</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+

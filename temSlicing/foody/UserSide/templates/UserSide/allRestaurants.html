@@ -1,0 +1,78 @@
+{% extends 'UserSide/masterPage.html' %}
+
+{% block body %}
+<div class="container-fluid page-header wow fadeIn" data-wow-delay="0.1s"
+     style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn;">
+    <div class="container">
+        <h1 class="display-3 mb-3  slideInDown">Restaurants</h1>
+    </div>
+</div>
+
+
+<div class="tab-content" style="margin:20px;">
+    <div class="side-bar col-md-3" style="width:20%;">
+        <div class="search-hotel">
+            <h3 class="shopf-sear-headits-sear-head">
+                <span>Search</span> Restaurant</h3>
+            <form action="#" method="post">
+                <input type="hidden" name="csrfmiddlewaretoken"
+                       value="ZBGFHuJMpXlmT5flMDL0S2Cetd4EBmHJ2V1EhXht0vzcnEZoWcBJIsbfj7EuQx4i">
+                <input type="text" placeholder="Search restaurant by name" name="search" required=""
+                       style="background: #dedede; width: 100%; padding: 11px 10px 10px 10px; font-size: 13px; color: #000000; letter-spacing: 1px; text-align: center; border: none; outline: none;">
+                <br>
+                <br>
+                <input type="submit" value="Search"
+                       style="background: #dedede; width: 100%; padding: 11px 10px 10px 10px; font-size: 13px; color: #000000; letter-spacing: 1px; text-align: center; border: none; outline: none;">
+            </form>
+        </div>
+    </div>
+    <br>
+    <div id="tab-1" class="tab-pane fade show p-0 active">
+        <div class="row g-4">
+            {% for i in res %}
+            <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s"
+                 style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+                <div class="product-item">
+                    <div class="position-relative bg-light overflow-hidden">
+                        <img class="img-fluid w-100" src="{{i.image.url}}" alt="">
+                    </div>
+                    <div class="text-center p-4">
+                        <a class="d-block h5 mb-2" href="">{{i.name}}</a>
+                        <span class="text-primary me-1">{{i.email}}</span>
+                        <p>{{i.phoneNumber}}</p>
+                        <p>{{i.location}}</p>
+                    </div>
+                    <div class="d-flex border-top">
+                        <small class="w-50 text-center border-end py-2">
+                            <a class="text-body" href="{% url 'restaurantsMenus' i.id %}"><i
+                                    class="fa fa-eye text-primary me-2"></i>View Menu</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!--<div class="product-item">-->
+<!--    <div class="position-relative bg-light overflow-hidden">-->
+<!--        <img class="img-fluid w-100" src="img/product-1.jpg" alt="">-->
+<!--        <div class="bg-secondary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">New</div>-->
+<!--    </div>-->
+<!--    <div class="text-center p-4">-->
+<!--        <a class="d-block h5 mb-2" href="">Fresh Tomato</a>-->
+<!--        <span class="text-primary me-1">$19.00</span>-->
+<!--        <span class="text-body text-decoration-line-through">$29.00</span>-->
+<!--    </div>-->
+<!--    <div class="d-flex border-top">-->
+<!--        <small class="w-50 text-center border-end py-2">-->
+<!--            <a class="text-body" href=""><i class="fa fa-eye text-primary me-2"></i>View detail</a>-->
+<!--        </small>-->
+<!--        <small class="w-50 text-center py-2">-->
+<!--            <a class="text-body" href=""><i class="fa fa-shopping-bag text-primary me-2"></i>Add to cart</a>-->
+<!--        </small>-->
+<!--    </div>-->
+<!--</div>-->
+
+{% endblock %}
