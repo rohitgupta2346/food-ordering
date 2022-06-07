@@ -6,6 +6,9 @@ urlpatterns = [
     path('home', views.home, name="home"),
     path('items', views.items, name="items"),
 
+    path('users', views.viewUser, name = "viewUsers"),
+    path('delete-user/<int:id>', views.deleteUser, name = "deleteUser"),
+
     path('addRestaurants', views.addRestaurants, name="addRestaurants"),
     path('viewRestaurants', views.viewRestaurants, name="viewRestaurants"),
     path("editRestaurants/<int:id>", views.editRestaurants, name="editRestaurants"),

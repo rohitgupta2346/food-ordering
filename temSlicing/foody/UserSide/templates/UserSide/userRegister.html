@@ -72,6 +72,9 @@
         <div class="container">
             <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px; visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
             </div>
+            {% if message %}
+                <div class="alert-warning p-2 mb-3">{{message}}</div>
+            {% endif %}
             <div class="row g-5 justify-content-center">
                 <div class="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
                     <form action="{% url 'userRegister' %}" method="post" enctype="multipart/form-data">
@@ -102,7 +105,7 @@
                                 </div>
                             </div>
                              <div class="col-12">
-                                <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Login</button>
+                                <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Register</button>
                             </div>
                         </div>
                     </form>

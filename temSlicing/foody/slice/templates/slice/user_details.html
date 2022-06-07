@@ -1,0 +1,66 @@
+{% extends 'slice/home.html' %}
+
+{% block body %}
+<!-- <div class="container-fluid page-header wow fadeIn" data-wow-delay="0.1s"
+     style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn;">
+    <div class="container">
+        <h1 class="display-3 mb-3  slideInDown">User Details</h1>
+    </div>
+</div> -->
+<div class="innerf-pages section">
+    <div class="container">
+        <div class="privacy about">
+            <ul class="btn-group btn-breadcrumb bc-list">
+                <li class="btn btn1">
+                    <a href="">
+                        <i class="glyphicon glyphicon-home"></i>
+                    </a>
+                </li>
+            </ul>
+            <br>
+            <br>
+            <div class="checkout-right">
+                <table class="timetable_sub table-responsive" style="width: 100%; border-collapse: collapse; line-height: 1.42857143;">
+                    <thead>
+                    <tr>
+                        <th style="text-align: center; padding: 7px; font-size: 14px; background: #212121;
+                        color: #fff !important; text-transform: capitalize;">Id</th>
+                        <th style="text-align: center; padding: 7px; font-size: 14px; background: #212121;
+                        color: #fff !important; text-transform: capitalize;">User name</th>
+                        <th style="text-align: center; padding: 7px; font-size: 14px; background: #212121;
+                        color: #fff !important; text-transform: capitalize;">Email</th>
+                        <!-- <th style="text-align: center; padding: 7px; font-size: 14px; background: #212121;
+                        color: #fff !important; text-transform: capitalize;">Dish Image</th>
+                        <th style="text-align: center; padding: 7px; font-size: 14px; background: #212121;
+                        color: #fff !important; text-transform: capitalize;">Quantity</th>
+                        <th style="text-align: center; padding: 7px; font-size: 14px; background: #212121;
+                        color: #fff !important; text-transform: capitalize;">Total Amount</th> -->
+                        <th style="text-align: center; padding: 7px; font-size: 14px; background: #212121;
+                        color: #fff !important; text-transform: capitalize;">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in data %}
+                    <tr class="rem1">
+                        <td style="border: 1px solid #CDCDCD; text-align: center; padding: 7px;
+                        font-size: 14px; color: #212121;">{{i.id}}</td>
+                        <td style="border: 1px solid #CDCDCD;  text-align: center; padding: 7px;
+                        font-size: 14px; color: #212121;">{{i.username}}</td>
+                        <td style="border: 1px solid #CDCDCD;  text-align: center; padding: 7px;
+                        font-size: 14px; color: #212121;">{{i.email}}</td>
+                        <!-- <td style="border: 1px solid #CDCDCD;  text-align: center; padding: 7px;
+                        font-size: 14px; color: #212121;"><img src="{{i.food_id.menuImage.url}}" width="100px" height="100px"></td>
+                        <td style="border: 1px solid #CDCDCD;  text-align: center; padding: 7px;
+                        font-size: 14px; color: #212121;">{{i.quantity}}</td> -->
+                        <td style="border: 1px solid #CDCDCD;  text-align: center; padding: 7px;
+                        font-size: 14px; color: #212121;"><a class="text-body" href="{% url 'deleteUser' i.id %}"><i class="fa fa-shopping-bag text-primary me-2"></i>Delete</a></td>
+                        
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -85,7 +85,7 @@ def deleteRestaurants(request, id):
     z.delete()
     res = Restaurant.objects.all()
     return render(request, 'slice/viewRestaurants.html',
-                  {'message': "Restaurant delete successfully", "res": res, "pageTitle": "Restaurants List"})
+                  {'message': "Restaurant delete successfully", "data": res, "pageTitle": "Restaurants List"})
 
 
 @login_required(login_url='adminLogin')
@@ -104,7 +104,7 @@ def addMenu(request):
         a.save()
         res = RestaurantMenu.objects.all()
         return render(request, 'slice/viewMenu.html',
-                      {'message': "Restaurant Menu added successfully", "res": res, "pageTitle": "Menus List"})
+                      {'message': "Restaurant Menu added successfully", "data": res, "pageTitle": "Menus List"})
     else:
         rt = Restaurant.objects.all()
         return render(request, 'slice/addMenu.html', {"rt": rt, "pageTitle": "Add Menu"})
@@ -125,16 +125,20 @@ def editMenu(request, id):
                 os.remove(a.menuImage.path)
             a.res_image = request.FILES['dishImage']
         print("Restaurant Id - ", request.POST['restaurantId'])
-        dPrice = int(request.POST['dishPrice'])
+        if (request.POST['dishPrice']):
+            dPrice = int(request.POST['dishPrice'])
+        else:
+            dPrice = a.price
         print("Price - ", dPrice, "Type - ", type(dPrice))
         name = request.POST['dishName']
-        a.food_name = name,
-        a.price = dPrice,
-        a.restaurantId_id = Restaurant.objects.get(id=request.POST['restaurantId']),
+        print(name, dPrice)
+        a.food_name = name
+        a.price = dPrice
+        a.restaurantId = Restaurant.objects.get(id=request.POST['restaurantId'])
         a.save()
         res = RestaurantMenu.objects.all()
         return render(request, 'slice/viewMenu.html',
-                      {'message': "Restaurant Menu updated successfully", "res": res, "pageTitle": "Menus List"})
+                      {'message': "Restaurant Menu updated successfully", "data": res, "pageTitle": "Menus List"})
     else:
         rt = Restaurant.objects.all()
         return render(request, 'slice/editMenu.html', {"a": a, "rt": rt, "pageTitle": "Update Menu"})
@@ -218,3 +222,15 @@ def changestatus(request):
     b.save()
     ord_details = OrderDetails.objects.all()
     return render(request, 'slice/order_details.html', {'ord_details': ord_details, "pageTitle": "Orders List"})
+
+
+@login_required(login_url='adminLogin')
+def viewUser(request):
+    all_user = User.objects.filter(is_superuser = False)
+    return render(request, 'slice/user_details.html', {'data': all_user})
+
+@login_required(login_url='adminLogin')
+def deleteUser(request, id):
+    a = User.objects.get(id=id)
+    a.delete()
+    return HttpResponseRedirect(reverse('viewUsers'))

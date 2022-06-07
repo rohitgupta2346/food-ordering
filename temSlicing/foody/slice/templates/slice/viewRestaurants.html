@@ -3,6 +3,9 @@
 {% block body %}
 
 <div class="tab-content" style="margin:20px;">
+    {% if message %}
+        <div class="alert-success p-1 mb-3">{{message}}</div>
+    {% endif %}
     <div id="tab-1" class="tab-pane fade show p-0 active">
         <div class="row g-4">
             {% for i in res %}
