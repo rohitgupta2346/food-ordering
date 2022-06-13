@@ -1,0 +1,41 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+     <link href="{% static '/css/phone.css' %}" rel="stylesheet">
+</head>
+<body style="background:url(/static/img/pizza-g04d2cb425_1920.jpg); opacity:0.9;">
+<!--   <div class="container-fluid" style="margin-top:300px;">-->
+<!--      <div class="row justify-content-center">-->
+        {% for d in fdata%}
+            {% if d.is_veg is True %}
+
+        <div class="part1" style="display:inline-block;">
+            <div class="foodtype1">
+                <img src="{{d.restourant_id.image.url}}" alt="error loading item" height="200px" width="200px">
+                <h3>{{d.food_name}}</h3>
+                <ul>
+                    <li>{{d.food_name}}</li>
+                    <li>{{d.is_veg}}</li>
+                    <li>{{d.price}}&#8377;</li>
+                    <li>{{d.restourant_id.name}}</li>
+
+                </ul>
+                <h1><a><button>Order Now</button></a></h1>
+            </div>
+        </div>
+
+            {% endif %}
+        {% endfor %}
+
+      </div>
+    </div>
+
+</body>
+</html>
+

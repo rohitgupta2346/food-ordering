@@ -1,0 +1,232 @@
+/* navigation bar */
+
+#navbar{display:flex;
+    height: 80px;
+    width:100%;
+    align-items: center;
+     position:sticky; 
+    /* position:sticky; */
+     top:0px; 
+    left:-4px; 
+    /* justify-content: center; */
+
+}
+#navbar::before{
+    content:"";
+    content: "";
+    background-color: black;
+     position: absolute; 
+    top:0px;
+    left:0px;
+    height: 70px;
+    width:100%;
+     z-index: -1; 
+    opacity: 0.8;
+ 
+    
+
+}
+/* logo styles */
+.logo{
+    position:relative;
+    top:0px; 
+    left:0px;
+    padding:-1px 10px;
+    margin:-7px -60px;
+
+}
+/* list styles */
+ul{
+    display:flex;
+}
+li {
+list-style: none;
+}
+li a{
+    padding:10px 10px;
+    margin:10px 5px;
+    text-decoration: none;
+    curser:pointer;
+    font-size: 1.7rem;
+    color:#e9e509;
+}
+li a:hover{
+    color:black;
+    font-weight: bold;
+    background-color: aqua;
+}
+
+/* home styling */
+#home{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px 106px;
+    margin: 22px 10px;
+
+}
+#home h1{
+    font-size: 3.3rem;
+    color: rgb(231, 247, 16);
+    background-color: black;
+}
+#home p{
+    font-weight: bold;
+    text-shadow: -1px 0px rgb(19, 222, 236);
+    font-size: 1.7rem;
+    color:rgb(17, 19, 18);
+}
+#home::before{
+    content:"";
+    background: url('pizza-g04d2cb425_1920.jpg');
+     position:absolute; 
+     z-index: -1; 
+    opacity: .9;
+    height: 600px;
+    width:100%;
+    top:82px;
+}
+/* section:services-container */
+#services-container{
+height: 600px;
+width: 100%;
+background-color:rgb(224 232 235);
+margin-top: 60px;
+}
+#services-container h2{
+    text-align: center;g
+    padding-top: 30px;
+    font-size: 4rem;
+    font-family: Ubuntu;
+    text-shadow: 3px 4px white;
+    color:#e71818;
+}
+
+/* section food items */
+
+
+#foodname{
+    height:100%;
+    width:100%;
+    background-color: #a99fa1;
+    /* margin:10px 10px; */
+}
+#foodname h1{text-align: center;
+    padding-top: 30px;
+    font-size: 4rem;
+    font-family: Ubuntu;
+    text-shadow: 3px 4px white;
+    color:#e71818;
+
+
+}
+#foodname h2{
+    text-align: center;
+    background-color: black;
+    color: white;
+    width:300px;
+     /* margin-bottom: 40px;  */
+     margin: 30px auto;
+    
+
+}
+.part1{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.foodtype1{
+    padding:10px 50px;
+    margin:10px 10px;
+}
+.foodtype1 img{ border: 4px solid blue;
+    border-radius: 15px;
+    box-shadow: -10px -7px 21px green;
+
+
+}
+ .foodtype1 ul{ 
+     display:flex; 
+     flex-direction: column; 
+     background-color:#0fef26;
+    }
+    
+    
+ 
+ .foodtype1 li{
+     list-style: square;
+     color:black;
+     font-weight: bold;
+     font-family: Bebas Neue;
+
+
+ }
+ .foodtype1 h3{background-color:rgb(196, 151, 5);
+    text-align: center;
+    border:2px solid blue;
+
+ }
+
+ 
+
+
+ /* contact section */
+ #contact1{
+     display:flex;
+      flex-direction: column; 
+     /* align-items: center; */
+     justify-content: center;
+     height: 350px;
+     width:30%;
+     margin:10px auto;
+     padding:10px 50px;
+     background-color: aqua;
+     border:2px solid black;
+     border-radius:10px;
+ }
+ #contact1 h2 {color:rgb(202, 17, 17);
+    background-color: yellow;
+     
+ }
+ #contact1 button{
+     color:rgb(212, 210, 209);
+     background-color: #e27b06;
+     border:2px solid black;
+     cursor: pointer;
+     border-radius: 5px;
+     width:150px;
+     font-weight: bold;
+ }
+ #contact1 input{
+     /* color:rgb(158, 56, 56); */
+ }
+ .submitt{
+     color:rgb(13, 243, 63);
+     background-color: #d6570d;
+     border:2px solid rgb(14, 3, 3);
+     border-radius: 5px;
+     cursor: pointer;
+     margin:auto;
+     width:150px;
+     font-weight: bold;
+ }
+ .submitt:hover{
+    color:rgb(7, 10, 15);
+    background-color: #0dd65a;
+    
+    
+}
+#contact1 button:hover{
+    color:rgb(14, 9, 6);
+    background-color: #0dd65a;
+    
+    
+}
+    
+
+
+
+
+
